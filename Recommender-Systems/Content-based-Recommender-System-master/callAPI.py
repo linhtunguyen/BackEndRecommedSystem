@@ -1,7 +1,20 @@
 from fastapi import FastAPI #import class FastAPI() từ thư viện fastapi
 import recomentest as recommending
 import productTextEetrieval as recomendByQuery
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI() # gọi constructor và gán vào biến app
+
+origins = [
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/") # giống flask, khai báo phương thức get và url
