@@ -14,7 +14,7 @@ import sklearn
 from difflib import get_close_matches
 
 import pandas as pd
-df = pd.read_csv('E:/DO_AN/Codes/Content-based_recomendation/Pro1_05_02_2022/Recommender-Systems/Content-based-Recommender-System-master/laptop_all.csv')
+df = pd.read_csv('./database/laptop_all.csv')
 
 def clean_laptop_name(name):
     name = str(name).lower()
