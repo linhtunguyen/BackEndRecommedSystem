@@ -16,10 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/items/testmongo/{item_id}")
 async def read_item(item_id): # trả về danh sách infor của item
-    listProductInfo= queryMongo.recommendWhenClickToAProduct(item_id)
-    return {"list_item_infor": listProductInfo}
+    productDetail={}
+    listProductRelatedInfo= queryMongo.recommendWhenClickToAProduct(item_id)
+    productInfor=queryMongo.getProductInforByCode(item_id)
+    productDetail={'productInfo':productInfor,'relatedProducts':listProductRelatedInfo}
+    return {"list_infor": productDetail}
 
 @app.get("/items/testmongo_query/{query_string}")
 async def read_item_query(query_string: str): # trả về danh sách infor của item

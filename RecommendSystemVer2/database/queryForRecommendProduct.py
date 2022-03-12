@@ -46,3 +46,7 @@ def getHotProduct():
     for product in mycolection.find({"rating": {"$gt": "3"}},{'_id': 0}).sort("ram"):
         listHotProduct.append(product)
     return listHotProduct
+
+def getProductInforByCode(productCode):
+    inforProduct= mycolection.find_one({"code": productCode}, {'_id': 0})
+    return inforProduct
