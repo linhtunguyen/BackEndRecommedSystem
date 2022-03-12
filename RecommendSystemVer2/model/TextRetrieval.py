@@ -141,6 +141,8 @@ class Storage:
         sim_maxtrix = np.reshape(sim_maxtrix, (-1,))
         idx = (-sim_maxtrix).argsort()[:30]
         for _id in idx:
+            if sim_maxtrix[_id] < 0.2:
+                continue
             # print(_id, sim_maxtrix[_id])
             #             print(newItems[_id]['name'].upper())
             print('code : ',self.items[_id])
@@ -160,9 +162,9 @@ class Storage:
 
         return result
 
+s = Storage()
 
 def getProductItem(query_string):
-    s = Storage()
     item_descriptions = []
     for i in items:
         item_descriptions.append(i)

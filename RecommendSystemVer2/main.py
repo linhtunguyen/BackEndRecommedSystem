@@ -24,6 +24,11 @@ async def read_item(item_id): # trả về danh sách infor của item
 @app.get("/items/testmongo_query/{query_string}")
 async def read_item_query(query_string: str): # trả về danh sách infor của item
     listProductInfo = queryMongo.recommendByQuery(query_string)
+    # return {"list_item_infor": listProductInfo}
+    return listProductInfo
+@app.get("/items/hotproduct")
+async def read_item_query(): # trả về danh sách infor của item
+    listProductInfo = queryMongo.getHotProduct()
     return {"list_item_infor": listProductInfo}
 
 @app.get("/items/hotproduct")
