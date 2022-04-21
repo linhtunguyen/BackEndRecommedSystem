@@ -93,8 +93,7 @@ def make_bert_features(v_text):
     print(v_features.shape)
     return v_features
 
-ds = pd.read_csv(
-    "../laptop_all.csv")
+ds = pd.read_csv("../laptop_all.csv")
 print("Chuẩn bị nạp danh sách các từ vô nghĩa (stopwords)...")
 sw = load_stopwords()
 print("Đã nạp xong danh sách các từ vô nghĩa")
@@ -112,28 +111,23 @@ features = make_bert_features(text)
 print("Đã tạo xong features từ BERT")
 
 ds['vector'] = features
-ds.to_csv("")
 
-# import numpy as np
-# from scipy import sparse
-# from sklearn.metrics.pairwise import cosine_similarity
-# from sklearn.metrics.pairwise import linear_kernel
-# cosine_similarities = linear_kernel(features, features)
-#
-# results = {}
-#
-# for idx, row in ds.iterrows():
-#     similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
-#     similar_items = [(cosine_similarities[idx][i], ds['code'][i]) for i in similar_indices]
-#     results[row['code']] = similar_items[1:]
-#
-# def getRelevantItems(itemCode):
-#     print(ds[ds["code"] == itemCode].iloc[0]["full_name"])
-#
-#     recs = results[itemCode][:8]
-#     for rec in recs:
-#         # print("Recommended: " + str(int(rec[1])) + " (score:" + str(rec[0]) + ")")
-#         print(ds[ds["code"] == rec[1]].iloc[0]["full_name"])
-#         print("rec = ", rec[1])
-#
-# getRelevantItems(220042001424)
+from sklearn.metrics.pairwise import linear_kernel
+cosine_similarities = linear_kernel(features, features)
+
+results = {}
+
+for idx, row in ds.iterrows():
+    similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
+    similar_items = [(cosine_similarities[idx][i], ds['code'][i]) for i in similar_indices]
+    results[row['code']] = similar_items[1:]
+
+def getRelevantItems(itemCode):
+    print(ds[ds["code"] == itemCode].iloc[0]["full_name"])
+    recs = results[itemCode][:8]
+    for rec in recs:
+        # print("Recommended: " + str(int(rec[1])) + " (score:" + str(rec[0]) + ")")
+        print(ds[ds["code"] == rec[1]].iloc[0]["full_name"])
+        print("rec = ", rec[1])
+
+getRelevantItems(220042001424)

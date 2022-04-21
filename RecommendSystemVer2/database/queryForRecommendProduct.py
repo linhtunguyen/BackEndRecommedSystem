@@ -41,6 +41,11 @@ def recommendByQuery(query_string):
     result["listProduct"] = listProductInfor
     return result
 
+def getDetail(id):
+    print("getDetail, id = ", id)
+    item = mycolection.find({'code': id})
+    return item
+
 def getHotProduct():
     listHotProduct=[]
     for product in mycolection.find({"rating": {"$gt": "3"}},{'_id': 0}).sort("ram"):
