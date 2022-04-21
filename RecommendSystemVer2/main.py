@@ -16,11 +16,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/detail/{id}")
-async def getItemDetail(item_id): # trả về danh sách infor của item
-    print("getItemDetail()")
-    item = queryMongo.getDetail()
-    return item
+@app.get("/detail/{code_product}")
+async def deatailProduct(code_product): # trả về danh sách infor của item
+    pro = queryMongo.getDetailProduct(code_product)
+    return {"detail_product": pro}
 
 @app.get("/items/testmongo/{item_id}")
 async def read_item(item_id): # trả về danh sách infor của item
