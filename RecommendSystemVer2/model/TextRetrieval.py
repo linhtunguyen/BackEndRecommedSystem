@@ -14,7 +14,7 @@ import sklearn
 from difflib import get_close_matches
 
 import pandas as pd
-df = pd.read_csv('E:/DO_AN/Codes/Content-based_recomendation/Pro1_05_02_2022/Recommender-Systems/Content-based-Recommender-System-master/laptop_all.csv')
+df = pd.read_csv('./database/laptop_all.csv')
 
 def clean_laptop_name(name):
     name = str(name).lower()
@@ -141,6 +141,8 @@ class Storage:
         sim_maxtrix = np.reshape(sim_maxtrix, (-1,))
         idx = (-sim_maxtrix).argsort()[:30]
         for _id in idx:
+            if sim_maxtrix[_id] < 0.2:
+                continue
             # print(_id, sim_maxtrix[_id])
             #             print(newItems[_id]['name'].upper())
             print('code : ',self.items[_id])
@@ -160,9 +162,9 @@ class Storage:
 
         return result
 
+s = Storage()
 
 def getProductItem(query_string):
-    s = Storage()
     item_descriptions = []
     for i in items:
         item_descriptions.append(i)

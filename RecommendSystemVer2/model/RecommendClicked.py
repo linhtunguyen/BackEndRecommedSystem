@@ -48,8 +48,7 @@ def text_preprocessing(doc):
         docAfterPreprocess.append(temp)
     return docAfterPreprocess
 
-ds = pd.read_csv(
-    "E:/DO_AN/Codes/Content-based_recomendation/Pro1_05_02_2022/Recommender-Systems/Content-based-Recommender-System-master/laptop_all.csv")
+ds = pd.read_csv("./database/laptop_all.csv")
 # stop = list(stopwords.words('Vietnamese'))
 # tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0, stop_words=set(stop))
 class SimilarityProduct:
@@ -89,7 +88,7 @@ class SimilarityProduct:
 
     def getInforProductRecommended(listProductCode):
         listInforProduct=[]
-        with open('E:/DO_AN/Codes/Content-based_recomendation/Pro1_05_02_2022/Recommender-Systems/Content-based-Recommender-System-master/laptop_all.csv',encoding="utf8") as f:
+        with open('/database/laptop_all.csv',encoding="utf8") as f:
             csv_reader1 = csv.reader(f)
             header = next(csv_reader1)
             csv_reader=list(csv_reader1)
