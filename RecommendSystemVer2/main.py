@@ -46,7 +46,11 @@ async def read_item_query(): # trả về danh sách infor của item
 async def read_item_query(id): # trả về danh sách infor của item
     listProductInfo = queryMongo.getHotProduct()
     return {"list_item_infor": listProductInfo}
-
+@app.get("/items/related/{product_id}")
+async def addRelated(product_id): # trả về danh sách infor của item
+    queryMongo.addRelatedProduct(product_id)
+    return {'true':"true"}
+    
 import service.RecommendService as rs
 
 recommenderService = rs.RecommenderService()

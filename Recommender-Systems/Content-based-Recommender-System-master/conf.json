@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "appsetting": {
+    "connection_string": "mongodb+srv://Hwuang:q@cluster0.ot4kn.mongodb.net/bigdata_project?retryWrites=true&w=majority"
+  }
+}
