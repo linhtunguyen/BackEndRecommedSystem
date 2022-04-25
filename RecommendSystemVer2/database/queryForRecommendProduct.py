@@ -51,3 +51,11 @@ def getHotProduct():
     for product in mycolection.find({"rating": {"$gt": "3"}},{'_id': 0}).sort("ram"):
         listHotProduct.append(product)
     return listHotProduct
+
+def getDetailProduct(prCode):
+    return mycolection.find_one({"code": prCode}, {'_id': 0})
+
+def addRelatedProduct(prCode):
+    myquery = {"code": prCode}
+    newvalues = {"$set": {"revalentItems": [1,2,3,4,5]}}
+    mycolection.update_one(myquery, newvalues)
