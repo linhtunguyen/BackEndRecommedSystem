@@ -9,6 +9,9 @@ myclient = pymongo.MongoClient("mongodb+srv://Hwuang:q@cluster0.ot4kn.mongodb.ne
 mydb = myclient["ecommerce_electronic"]
 mycolection = mydb["product"]
 
+
+
+
 def recommendWhenClickToAProduct(item_id):
     listProductÌnfor = []
     recommending=RecommendClicked.SimilarityProduct()
@@ -19,7 +22,7 @@ def recommendWhenClickToAProduct(item_id):
         listProductÌnfor.append(result)
     return listProductÌnfor
 
-recomendByQuery=TextRetrieval.Storage()
+recomendByQuery=TextRetrieval.Storage({})
 item_descriptions = []
 for i in TextRetrieval.items:
     item_descriptions.append(i)

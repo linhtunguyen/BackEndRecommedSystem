@@ -41,3 +41,30 @@ async def read_item_query(): # trả về danh sách infor của item
 async def read_item_query(): # trả về danh sách infor của item
     listProductInfo = queryMongo.getHotProduct()
     return {"list_item_infor": listProductInfo}
+
+@app.get("/items/hotproduct")
+async def read_item_query(id): # trả về danh sách infor của item
+    listProductInfo = queryMongo.getHotProduct()
+    return {"list_item_infor": listProductInfo}
+
+import service.RecommendService as rs
+
+recommenderService = rs.RecommenderService()
+
+@app.get("/v2/items")
+async def read_item_query():
+    return recommenderService.getAll()
+
+@app.get("/v2/items/{id}")
+async def read_item_query(id):
+    return recommenderService.getOne(id)
+
+@app.get("/v2/items/test/{id}")
+async def read_item_query(id):
+    return recommenderService.getOneTest(id)
+
+
+
+@app.get("/v2/items/search/{query}")
+async def read_item_query(query):
+    return recommenderService.getOneTest(id)
