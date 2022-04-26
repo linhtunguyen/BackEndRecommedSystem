@@ -16,6 +16,13 @@ class Repository:
     def getAll(self):
         print("[ Repository - getAll() ] self.collection = ", self.mycolection)
         items = list(self.mycolection.find({}))
-        print("[ Repository - getAll() ] items = ", items)
+        # print("[ Repository - getAll() ] items = ", items)
         return items
 
+    def getByListId(self, ids):
+        print("[ Repository - getByListId() ] ids = ", ids)
+        return list(self.mycolection.find({"code": {"$in": ids}}, {'_id': 0}))
+
+    def updateOne(self, query, value):
+        print(f"[ Repository - updateOne() ] query = {query}, value = {value}")
+        return self.mycolection.update_one(query, value)

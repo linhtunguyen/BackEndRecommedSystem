@@ -9,10 +9,16 @@ class RecommenderService:
     def __init__(self):
         items = self.repo.getAll()
         itemDict = {'code': [], 'description': []}
+        f_items = []
         for i in items:
-            itemDict['code'].append(i['code'])
-            itemDict['description'].append(i['description'])
+            if 'MoTa' not in i:
+                f_items.append(i)
+                continue
 
+            itemDict['code'].append(i['code'])
+            itemDict['description'].append(i['MoTa'])
+
+        print(f_items)
         self.storage = tf.Storage(itemDict)
 
     def getAll(self):
@@ -40,5 +46,27 @@ class RecommenderService:
 
     def getProductByQuery(self, query):
         print("[ RecommenderService - getProductByQuery() ] query = ", query)
-        relevantItems = self.storage.searchByQuery(query)
-        return relevantItems
+        relevantItemsCode = self.storage.searchByQuery(query)
+
+        items = self.repo.getByListId(relevantItemsCode)
+
+        return items
+
+    def updateItemRelevantItems(self):
+        items = self.repo.getAll()
+        for i in items:
+            relevantItemsCode = self.storage.searchByQuery(i['MoTa'])
+            query = {"code": i["code"]}
+            val = {"$set": {"relative": relevantItemsCode}}
+            self.repo.updateOne(query, val)
+
+        return
+
+    def getItemRelative(self, id):
+        item = self.repo.getOne(id)
+
+        if 'relative' not in item:
+            raise 'Item doesnt have relative'
+
+        relative = self.repo.getByListId(item['relative'])
+        return relative

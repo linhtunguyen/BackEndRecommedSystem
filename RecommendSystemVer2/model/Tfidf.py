@@ -17,12 +17,10 @@ class Tfidf:
     '''
 
     def fit_data(self, documents):
-        #         print(type(documents))
-        #         if type(documents) != "list":
-        #             raise ValueError('documents must be type of list')
 
         #         đếm số lần xuất hiện của mỗi từ
         for d in documents:
+            d = d.lower()
             #             tokens = word_tokenize(d, format='text').split()
             tokens = d.split()
             self.corpus_len += 1
@@ -35,9 +33,9 @@ class Tfidf:
         for k in self.corpus_counter.keys():
             self.corpus_dict.append(k)
 
-    def print_data(self):
-        print(self.corpus_counter)
-        print(len(self.corpus_counter))
+    # def print_data(self):
+    #     print(self.corpus_counter)
+    #     print(len(self.corpus_counter))
 
     def get_tfidf(self, string):
         string = string.lower()
@@ -92,6 +90,8 @@ class Storage:
         self.items = []
         self.fit_data(items)
 
+        # print("[ Storage __init__ ] - self.tfidf.corpus_counter = ", self.tfidf.corpus_counter)
+
     '''
     items: list<string>
     '''
@@ -104,13 +104,19 @@ class Storage:
     #         self.items.append(i)
 
     def fit_data(self, itemsDictionary):
+        # print("[ Tfidf - fit_data() ] - itemsDictionary = ", itemsDictionary)
+
         listString = itemsDictionary["description"]
         listCode = itemsDictionary["code"]
+
+        # print("[ Tfidf - fit_data() ] - listCode = ", listString[:2])
 
         self.tfidf.fit_data(listString)
 
         for idx in range(len(listString)):
-            self.tfidf_space.append(self.tfidf.get_tfidf(listString[idx]))
+            t_tfidf = self.tfidf.get_tfidf(listString[idx])
+            # print("[ Tfidf - fit_data() ] - t_tfidf = ", t_tfidf)
+            self.tfidf_space.append(t_tfidf)
             self.items.append(listCode[idx])
     #         self.svd.fit(self.tfidf_space)
     #         self.svd_tfidf_vector = self.svd.transform(self.tfidf_space)
@@ -123,15 +129,22 @@ class Storage:
         products = []
         query_vector = self.tfidf.get_tfidf(item)
         query_vector = np.reshape(query_vector, (1, -1))
+        print("[ searchByQuery ] - query_vector = ", query_vector)
+        # print("[ searchByQuery ] - self.tfidf_space = ", self.tfidf_space)
+
         # search
         sim_maxtrix = sklearn.metrics.pairwise.cosine_similarity(query_vector, self.tfidf_space)
         sim_maxtrix = np.reshape(sim_maxtrix, (-1,))
-        idx = (-sim_maxtrix).argsort()[:30]
+        idx = (-sim_maxtrix).argsort()[:20]
+        print("[ searchByQuery ] - idx = ", idx)
+
         for _id in idx:
-            if sim_maxtrix[_id] < 0.2:
+            print('[ searchByQuery ] - sim_matrix[_id] =  : ', sim_maxtrix[_id])
+
+            if sim_maxtrix[_id] < 0.07:
                 continue
-            print('code : ', self.items[_id])
             products.append(self.items[_id]) #Chỉ lấy ra phần code sản phẩm
+        print("[ searchByQuery ] - products = ", products)
         return products
 
     def evaluate_query(self, query):

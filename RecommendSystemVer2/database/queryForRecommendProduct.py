@@ -9,9 +9,6 @@ myclient = pymongo.MongoClient("mongodb+srv://Hwuang:q@cluster0.ot4kn.mongodb.ne
 mydb = myclient["ecommerce_electronic"]
 mycolection = mydb["product"]
 
-
-
-
 def recommendWhenClickToAProduct(item_id):
     listProductÌnfor = []
     recommending=RecommendClicked.SimilarityProduct()

@@ -112,24 +112,24 @@ print("Chuẩn bị tạo features từ BERT.....")
 features = make_bert_features(text)
 print("Đã tạo xong features từ BERT")
 
-ds['vector'] = features
-
-from sklearn.metrics.pairwise import linear_kernel
-cosine_similarities = linear_kernel(features, features)
-
-results = {}
-
-for idx, row in ds.iterrows():
-    similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
-    similar_items = [(cosine_similarities[idx][i], ds['code'][i]) for i in similar_indices]
-    results[row['code']] = similar_items[1:]
-
-def getRelevantItems(itemCode):
-    print(ds[ds["code"] == itemCode].iloc[0]["full_name"])
-    recs = results[itemCode][:8]
-    for rec in recs:
-        # print("Recommended: " + str(int(rec[1])) + " (score:" + str(rec[0]) + ")")
-        print(ds[ds["code"] == rec[1]].iloc[0]["full_name"])
-        print("rec = ", rec[1])
-
-getRelevantItems(220042001424)
+# ds['vector'] = features
+#
+# from sklearn.metrics.pairwise import linear_kernel
+# cosine_similarities = linear_kernel(features, features)
+#
+# results = {}
+#
+# for idx, row in ds.iterrows():
+#     similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
+#     similar_items = [(cosine_similarities[idx][i], ds['code'][i]) for i in similar_indices]
+#     results[row['code']] = similar_items[1:]
+#
+# def getRelevantItems(itemCode):
+#     print(ds[ds["code"] == itemCode].iloc[0]["full_name"])
+#     recs = results[itemCode][:8]
+#     for rec in recs:
+#         # print("Recommended: " + str(int(rec[1])) + " (score:" + str(rec[0]) + ")")
+#         print(ds[ds["code"] == rec[1]].iloc[0]["full_name"])
+#         print("rec = ", rec[1])
+#
+# getRelevantItems(220042001424)
