@@ -70,3 +70,6 @@ class RecommenderService:
 
         relative = self.repo.getByListId(item['relative'])
         return relative
+
+    def getListProductByCategory(self,categoyName):
+        return self.repo.getAllProuductOfCategory(categoyName)

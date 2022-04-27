@@ -26,3 +26,5 @@ class Repository:
     def updateOne(self, query, value):
         print(f"[ Repository - updateOne() ] query = {query}, value = {value}")
         return self.mycolection.update_one(query, value)
+    def getAllProuductOfCategory(self,categoryName):
+        return list(self.mycolection.find({"category": " "+categoryName}, {'_id': 0}))
