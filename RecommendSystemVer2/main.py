@@ -78,4 +78,4 @@ async def v2_items_search(id):
 
 @app.get("/category/{categoryName}")
 async def getProductOfCategory(categoryName):
-    return recommenderService.getListProductByCategory(categoryName)
+    return {"listProduct":recommenderService.getListProductByCategory(categoryName)}
