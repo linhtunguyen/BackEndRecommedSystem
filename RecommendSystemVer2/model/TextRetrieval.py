@@ -106,13 +106,13 @@ class Tfidf:
         return " ".join(refined)
         # thêm bigram
 
-
 class Storage:
-    def __init__(self):
+    def __init__(self, items):
         self.tfidf_space = []
         self.tfidf = Tfidf()
         self.svd = TruncatedSVD(n_components=256)
         self.items = []
+        self.fit_data(items)
 
     '''
     items: list<string>
@@ -131,7 +131,6 @@ class Storage:
     '''
     item: string
     '''
-
     def get_similiar_items(self, item):
         listPro=[]
         query_vector = self.tfidf.get_tfidf(item)
@@ -149,7 +148,6 @@ class Storage:
             listPro.append(self.items[_id][0:12])
         return listPro
     def evaluate_query(self, query):
-
         query_vector = self.tfidf.get_tfidf(query)
         query_vector = np.reshape(query_vector, (1, -1))
         sim_maxtrix = sklearn.metrics.pairwise.cosine_similarity(query_vector, self.tfidf_space)
@@ -162,12 +160,12 @@ class Storage:
 
         return result
 
-s = Storage()
+# s = Storage()
 
 def getProductItem(query_string):
     item_descriptions = []
     for i in items:
         item_descriptions.append(i)
     s.fit_data(item_descriptions)
-    return s.get_similiar_items(query_string)
+    return s.searchByQuery(query_string)
 
