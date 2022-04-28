@@ -73,3 +73,13 @@ class RecommenderService:
 
     def getListProductByCategory(self,categoyName):
         return self.repo.getAllProuductOfCategory(categoyName)
+
+
+    def updateCategory(self,categoryNameOld,categoryNameNew):
+        items = self.repo.getAll()
+        for i in items:
+            query = {"category": " "+categoryNameOld}
+            val = {"$set": {"category": categoryNameNew}}
+            self.repo.updateOne(query, val)
+
+        return
