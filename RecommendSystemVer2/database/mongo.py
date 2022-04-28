@@ -10,7 +10,7 @@ class Repository:
     def getOne(self, id):
         print("[ Repository - getOne() ] id = ", id)
         item =  self.mycolection.find_one({"code": id}, {'_id': 0})
-        print("[ Repository - getOne() ] item = ", item)
+        # print("[ Repository - getOne() ] item = ", item)
         return item
 
     def getAll(self):
