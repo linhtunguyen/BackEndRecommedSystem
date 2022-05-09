@@ -12,13 +12,14 @@ class RecommenderService:
         f_items = []
         for i in items:
             if 'MoTa' not in i:
+                self.repo.deleteOne(i['code'])
                 f_items.append(i)
                 continue
 
             itemDict['code'].append(i['code'])
             itemDict['description'].append(i['MoTa'])
 
-        print(f_items)
+        print("Undefined 'MoTa': ", f_items)
         self.storage = tf.Storage(itemDict)
 
     def getAll(self):

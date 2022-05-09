@@ -7,6 +7,10 @@ class Repository:
     mydb = myclient["ecommerce_electronic"]
     mycolection = mydb["product"]
 
+    def deleteOne(self, id):
+        print("[ Repository - deleteOne() ] id = ", id)
+        self.mycolection.delete_one({"code": id})
+
     def getOne(self, id):
         print("[ Repository - getOne() ] id = ", id)
         item =  self.mycolection.find_one({"code": id}, {'_id': 0})
