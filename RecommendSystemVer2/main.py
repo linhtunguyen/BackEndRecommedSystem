@@ -20,8 +20,8 @@ app.add_middleware(
 @app.get("/items/hotproduct")
 async def read_item_query(): # trả về danh sách infor của item
     print("read_item_query()")
-    listProductInfo = queryMongo.getHotProduct()
-    return {"list_item_infor": listProductInfo}
+    return queryMongo.getHotProduct()
+
 
 import service.RecommendService as rs
 
