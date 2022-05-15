@@ -12,7 +12,7 @@ class Repository:
         self.mycolection.delete_one({"code": id})
 
     def getOne(self, id):
-        print("[ Repository - getOne() ] id = ", id)
+        print(f"[ Repository - getOne() ] id = '{id}'")
         item =  self.mycolection.find_one({"code": id}, {'_id': 0})
         # print("[ Repository - getOne() ] item = ", item)
         return item

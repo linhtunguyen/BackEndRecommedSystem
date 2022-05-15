@@ -20,8 +20,8 @@ app.add_middleware(
 @app.get("/items/hotproduct")
 async def read_item_query(): # trả về danh sách infor của item
     print("read_item_query()")
-    listProductInfo = queryMongo.getHotProduct()
-    return {"list_item_infor": listProductInfo}
+    return queryMongo.getHotProduct()
+
 
 import service.RecommendService as rs
 
@@ -49,7 +49,7 @@ async def v2_items_search(id):
 
 @app.get("/category/{categoryName}")
 async def getProductOfCategory(categoryName):
-    return {"listProduct":recommenderService.getListProductByCategory(categoryName)}
+    return recommenderService.getListProductByCategory(categoryName)
 
 @app.get("/update/{categoryName}")
 async def updateCategory(categoryNameOld, categoryNew):
